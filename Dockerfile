@@ -21,8 +21,10 @@ ENV SLAVE_DESCRIPTION="Core Jenkins Slave"
 #Pre-requisites
 RUN yum install -y wget tar epel-release openldap-clients 
 RUN rpm -ivh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm && yum --enablerepo=rpmforge-extras install -y git
-RUN yum install -y docker-io python-pip
-RUN pip install awscli
+RUN yum install -y which docker-io python-pip
+RUN pip install awscli docker-compose
+RUN curl -L https://github.com/docker/machine/releases/download/v0.5.3/docker-machine_linux-amd64 >/usr/local/bin/docker-machine && \
+    chmod +x /usr/local/bin/docker-machine
 
 # Install Java 
 RUN wget -q --no-check-certificate --directory-prefix=/tmp \
