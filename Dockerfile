@@ -1,4 +1,4 @@
-FROM centos:centos6.7
+FROM centos:centos7.2.1511
 MAINTAINER "Nick Griffin" <nicholas.griffin@accenture.com>
 
 # Java Env Variables
