@@ -19,7 +19,7 @@ ENV SLAVE_EXECUTORS=1
 ENV SLAVE_DESCRIPTION="Core Jenkins Slave"
 
 #Pre-requisites
-RUN yum install -y wget tar epel-release openldap-clients 
+RUN yum install -y wget tar epel-release openldap-clients openssl
 RUN rpm -ivh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm && yum --enablerepo=rpmforge-extras install -y git
 RUN yum install -y which python-pip
 RUN pip install awscli
