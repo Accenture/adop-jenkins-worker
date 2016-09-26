@@ -18,18 +18,32 @@ ENV SLAVE_MODE="exclusive"
 ENV SLAVE_EXECUTORS=1
 ENV SLAVE_DESCRIPTION="Core Jenkins Slave"
 
-#Pre-requisites
-RUN yum install -y wget tar epel-release openldap-clients openssl
-RUN rpm -ivh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm && yum --enablerepo=rpmforge-extras install -y git
-RUN yum install -y which python-pip
-RUN pip install awscli
-RUN curl -fsSL https://get.docker.com/ | sh
-RUN curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && \
+# Pre-requisites
+RUN yum -y install epel-release
+RUN yum install -y which \
+    git \
+    wget \
+    tar \
+    openldap-clients \
+    openssl \
+    python-pip && \
+    yum clean all
+
+RUN pip install awscli==1.10.19
+
+# Docker versions Env Variables
+ENV DOCKER_ENGINE_VERSION=1.10.3-1.el7.centos
+ENV DOCKER_COMPOSE_VERSION=1.6.0
+ENV DOCKER_MACHINE_VERSION=v0.6.0
+
+RUN curl -fsSL https://get.docker.com/ | sed "s/docker-engine/docker-engine-${DOCKER_ENGINE_VERSION}/" | sh
+
+RUN curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose
-RUN curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine && \
+RUN curl -L https://github.com/docker/machine/releases/download/${DOCKER_MACHINE_VERSION}/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine && \
     chmod +x /usr/local/bin/docker-machine
 
-# Install Java 
+# Install Java
 RUN wget -q --no-check-certificate --directory-prefix=/tmp \
          --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
             http://download.oracle.com/otn-pub/java/jdk/8u45-b14/${JAVA_TARBALL} && \
