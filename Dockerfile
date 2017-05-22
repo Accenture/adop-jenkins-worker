@@ -32,11 +32,11 @@ RUN yum install -y which \
     libxslt && \
     yum clean all 
 
-RUN pip install awscli==1.10.19
+RUN pip install awscli==1.11.89
 
 # Docker versions Env Variables
 ENV DOCKER_ENGINE_VERSION=1.10.3-1.el7.centos
-ENV DOCKER_COMPOSE_VERSION=1.6.0
+ENV DOCKER_COMPOSE_VERSION=1.12.0
 ENV DOCKER_MACHINE_VERSION=v0.6.0
 
 RUN curl -fsSL https://get.docker.com/ | sed "s/docker-engine/docker-engine-${DOCKER_ENGINE_VERSION}/" | sh
