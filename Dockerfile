@@ -32,6 +32,8 @@ RUN yum install -y which \
     libxslt \
     telnet \
     nc \
+    net-tools \
+    strace \
     file && \
     yum clean all 
 
