@@ -30,6 +30,7 @@ RUN yum install -y which \
     openssl \
     python-pip \
     libxslt \
+    expect \
     telnet \
     nc \
     net-tools \
