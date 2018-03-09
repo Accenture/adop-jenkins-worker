@@ -2,8 +2,8 @@ FROM centos:centos7.2.1511
 MAINTAINER "Nick Griffin" <nicholas.griffin@accenture.com>
 
 # Java Env Variables
-ENV JAVA_VERSION=1.8.0_45
-ENV JAVA_TARBALL=server-jre-8u45-linux-x64.tar.gz
+ENV JAVA_VERSION=1.8.0_161
+ENV JAVA_TARBALL=server-jre-8u161-linux-x64.tar.gz
 ENV JAVA_HOME=/opt/java/jdk${JAVA_VERSION}
 
 # Swarm Env Variables (defaults)
@@ -29,7 +29,13 @@ RUN yum install -y which \
     openldap-clients \
     openssl \
     python-pip \
-    libxslt && \
+    libxslt \
+    expect \
+    telnet \
+    nc \
+    net-tools \
+    strace \
+    file && \
     yum clean all 
 
 RUN pip install awscli==1.10.19
@@ -49,7 +55,7 @@ RUN curl -L https://github.com/docker/machine/releases/download/${DOCKER_MACHINE
 # Install Java
 RUN wget -q --no-check-certificate --directory-prefix=/tmp \
          --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-            http://download.oracle.com/otn-pub/java/jdk/8u45-b14/${JAVA_TARBALL} && \
+            http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/${JAVA_TARBALL} && \
           mkdir -p /opt/java && \
               tar -xzf /tmp/${JAVA_TARBALL} -C /opt/java/ && \
             alternatives --install /usr/bin/java java /opt/java/jdk${JAVA_VERSION}/bin/java 100 && \
