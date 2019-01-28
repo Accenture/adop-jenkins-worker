@@ -1,9 +1,8 @@
-FROM centos:centos7.4.1708
-MAINTAINER "Nick Griffin" <nicholas.griffin@accenture.com>
+FROM centos:centos7.6.1810
 
 # Java Env Variables
-ENV JAVA_VERSION=1.8.0_192
-ENV JAVA_TARBALL=server-jre-8u192-linux-x64.tar.gz
+ENV JAVA_VERSION=1.8.0_202
+ENV JAVA_TARBALL=server-jre-8u202-linux-x64.tar.gz
 ENV JAVA_HOME=/opt/java/jdk${JAVA_VERSION}
 
 # Swarm Env Variables (defaults)
@@ -29,6 +28,8 @@ RUN yum install -y which \
     openldap-clients \
     openssl \
     python-pip \
+    systemd-219-62.el7_6.2.x86_64 \
+    systemd-libs-219-62.el7_6.2.x86_64 \
     libxslt && \
     yum clean all 
 
@@ -48,8 +49,8 @@ RUN curl -L https://github.com/docker/machine/releases/download/${DOCKER_MACHINE
 
 # Install Java
 RUN wget -q --no-check-certificate --directory-prefix=/tmp \
-         --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-            http://download.oracle.com/otn-pub/java/jdk/8u192-b12/750e1c8617c5452694857ad95c3ee230/${JAVA_TARBALL} && \
+         --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+            https://download.oracle.com/otn-pub/java/jdk/8u202-b08/1961070e4c9b4e26a04e7f5a083f551e/${JAVA_TARBALL} && \
           mkdir -p /opt/java && \
               tar -xzf /tmp/${JAVA_TARBALL} -C /opt/java/ && \
             alternatives --install /usr/bin/java java /opt/java/jdk${JAVA_VERSION}/bin/java 100 && \
